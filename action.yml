@@ -1,0 +1,29 @@
+name: 'ESLint Formatter'
+description: 'Run ESLint and format code automatically'
+author: 'tenderblowgu'
+
+inputs:
+  working-directory:
+    description: 'Directory to run ESLint in'
+    required: false
+    default: '.'
+  fix:
+    description: 'Auto-fix issues'
+    required: false
+    default: 'true'
+  token:
+    description: 'GitHub token for PR comments'
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  issues-found:
+    description: 'Number of linting issues found'
+
+runs:
+  using: 'node20'
+  main: 'index.js'
+
+branding:
+  icon: 'check-circle'
+  color: 'green'
