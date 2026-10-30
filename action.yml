@@ -1,0 +1,28 @@
+name: ESLint Formatter
+description: Run ESLint and format code automatically
+inputs:
+  working-directory:
+    description: Directory to run ESLint in
+    required: false
+    default: .
+  fix:
+    description: Auto-fix issues
+    required: false
+    default: "true"
+  token:
+    description: GitHub token for PR comments
+    required: false
+    default: "${{ github.token }}"
+runs:
+  using: composite
+  steps:
+    - uses: "tenderblowgu/my-lint-action@4c965c1de522a81fc6ef29cbdbf98d9ae825f671"
+      with:
+        working-directory: "${{ inputs.working-directory }}"
+        fix: "${{ inputs.fix }}"
+        token: "${{ inputs.token }}"
+    - uses: "oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6"
+    - name: Cleanup Action
+      shell: bash
+      run: bun run $GITHUB_ACTION_PATH/index.js
+      if: always()
